@@ -1,0 +1,30 @@
+# This is the default configuration for the monitoring sidecar
+#
+# apiVersion: monitoring.googleapis.com/v1beta
+# kind: RunMonitoring
+# metadata:
+#   name: run-gmp-sidecar
+# spec:
+#   endpoints:
+#   - port: 8080
+#     interval: 30s
+#
+#
+apiVersion: monitoring.googleapis.com/v1beta
+kind: RunMonitoring
+metadata:
+  name: my-custom-cloud-run-job
+spec:
+  endpoints:
+  - port: 8080
+    interval: 10s
+    metricRelabeling:
+    - action: replace
+      sourceLabels:
+      - __address__
+      targetLabel: label_key
+      replacement: label_value
+  targetLabels:
+    metadata:
+    - service
+    - revision
